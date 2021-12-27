@@ -1,0 +1,28 @@
+.navigation {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	width: 80%;
+	margin: 0 auto;
+}
+
+.navigation__links ul {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	list-style: none;
+}
+.navigation__links ul li {
+	display: inline-block;
+	padding: 10px 12px;
+}
+.navigation__links select {
+	background: none;
+	border: none;
+	width: 30px;
+	font-size: 16px;
+}
+
+.navigation__links select option {
+	background: #fff;
+}
