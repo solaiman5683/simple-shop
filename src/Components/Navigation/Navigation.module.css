@@ -6,10 +6,16 @@
 	margin: 0 auto;
 }
 
+.navigation__logo img {
+	width: 60px;
+	height: 60px;
+}
+
 .navigation__links ul {
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
+	padding: 0;
 	list-style: none;
 }
 .navigation__links ul li {

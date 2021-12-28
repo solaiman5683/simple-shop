@@ -20,6 +20,7 @@ export default class Navigation extends React.Component {
                         categories{
                           name
                         }
+                        currencies
                     }
                 `,
 			}),
@@ -28,16 +29,18 @@ export default class Navigation extends React.Component {
 			.then(res => {
 				// update context data
 				this.context.setCategories(res.data.categories);
+				this.context.setCurrencies(res.data.currencies);
 			});
 	}
 
 	// render the navigation
 	render() {
 		const { logo } = this.props;
-		const { activeCategory, setActiveCategory, cart } = this.context;
+		const { activeCategory, setActiveCategory, cart, currencies } =
+			this.context;
 		console.log(this.context);
 		const handleCurrencyChange = event => {
-			this.context.setCurrency(event.target.value);
+			this.context.setActiveCurrencies(event.target.value);
 		};
 		// return the navigation
 		return (
@@ -63,9 +66,11 @@ export default class Navigation extends React.Component {
 					<ul>
 						<li>
 							<select name='currency' onChange={handleCurrencyChange}>
-								<option value='usd'>$ USD</option>
-								<option value='eur'>€ EUR</option>
-								<option value='jpy'>¥ JPY</option>
+								{currencies.map((currency, i) => (
+									<option key={i} value={currency}>
+										¥ {currency}
+									</option>
+								))}
 							</select>
 						</li>
 						<li className={styles.cart}>

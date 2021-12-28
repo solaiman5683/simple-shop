@@ -7,7 +7,8 @@ export class ProductContextProvider extends Component {
 		categories: [],
 		activeCategory: 'clothes',
 		products: [],
-		currency: 'usd',
+		currencies: [],
+		activeCurrency: 'USD',
 		cart: [],
 		cartSubTotal: 0,
 		cartTax: 0,
@@ -22,8 +23,11 @@ export class ProductContextProvider extends Component {
 	setProducts = products => {
 		this.setState({ products });
 	};
-	setCurrency = currency => {
-		this.setState({ currency: currency });
+	setCurrencies = currencies => {
+		this.setState({ currencies });
+	};
+	setActiveCurrencies = currency => {
+		this.setState({ activeCurrency: currency });
 	};
 	setCartItem = item => {
 		let tempCart = [...this.state.cart];
@@ -59,7 +63,8 @@ export class ProductContextProvider extends Component {
 			categories,
 			activeCategory,
 			products,
-			currency,
+			currencies,
+			activeCurrency,
 			cart,
 			cartSubTotal,
 			cartTax,
@@ -68,7 +73,8 @@ export class ProductContextProvider extends Component {
 		const {
 			setCategories,
 			setProducts,
-			setCurrency,
+			setCurrencies,
+			setActiveCurrencies,
 			setCartItem,
 			removeCartItem,
 			setCartSubTotal,
@@ -80,14 +86,16 @@ export class ProductContextProvider extends Component {
 			categories,
 			activeCategory,
 			products,
-			currency,
+			currencies,
+			activeCurrency,
 			cart,
 			cartSubTotal,
 			cartTax,
 			cartTotal,
 			setCategories,
 			setProducts,
-			setCurrency,
+			setCurrencies,
+			setActiveCurrencies,
 			setCartItem,
 			removeCartItem,
 			setCartSubTotal,
