@@ -1,17 +1,26 @@
 import React from 'react';
 import styles from './Navigation.module.css';
+import ProductContext from '../../Contexts/ProductContext';
+
 export default class Navigation extends React.Component {
+	// use context data
+	static contextType = ProductContext;
+
 	// render the navigation
 	render() {
 		const { logo } = this.props;
+		console.log(this.context.currency);
 		// return the navigation
+		const handleCurrencyChange = event => {
+			this.context.setCurrency(event.target.value);
+		};
 		return (
 			<div className={styles.navigation}>
 				<div className={styles.navigation__links}>
 					<ul>
-						<li>Woman</li>
-						<li>Men</li>
-						<li>Kids</li>
+						<li className={`${styles.link} ${styles.active}`}>Woman</li>
+						<li className={styles.link}>Men</li>
+						<li className={styles.link}>Kids</li>
 					</ul>
 				</div>
 				<div className={styles.navigation__logo}>
@@ -20,10 +29,7 @@ export default class Navigation extends React.Component {
 				<div className={styles.navigation__links}>
 					<ul>
 						<li>
-							<select name='currency' id='currency'>
-								<option selected hidden>
-									$
-								</option>
+							<select name='currency' onChange={handleCurrencyChange}>
 								<option value='usd'>$ USD</option>
 								<option value='eur'>€ EUR</option>
 								<option value='jpy'>¥ JPY</option>

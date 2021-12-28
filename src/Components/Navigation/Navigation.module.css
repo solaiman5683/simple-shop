@@ -26,3 +26,14 @@
 .navigation__links select option {
 	background: #fff;
 }
+
+.navigation__links .link {
+	font-weight: 600;
+	padding: 10px 12px;
+	cursor: pointer;
+}
+
+.navigation__links .link.active {
+	color: #53d87b;
+	border-bottom: 2px solid #53d87b;
+}

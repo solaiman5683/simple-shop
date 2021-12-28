@@ -1,12 +1,13 @@
 import logo from './logo.svg';
 import './App.css';
 import Navigation from './Components/Navigation/Navigation';
+import { ProductContextProvider } from './Contexts/ProductContext';
 
 function App() {
 	return (
-		<div>
+		<ProductContextProvider>
 			<Navigation logo={logo} />
-		</div>
+		</ProductContextProvider>
 	);
 }
 
