@@ -4,7 +4,8 @@ export const ProductConsumer = ProductContext.Consumer;
 
 export class ProductContextProvider extends Component {
 	state = {
-		category: '',
+		categories: [],
+		activeCategory: 'clothes',
 		products: [],
 		currency: 'usd',
 		cart: [],
@@ -12,8 +13,11 @@ export class ProductContextProvider extends Component {
 		cartTax: 0,
 		cartTotal: 0,
 	};
-	setCategory = category => {
-		this.setState({ category });
+	setCategories = categories => {
+		this.setState({ categories });
+	};
+	setActiveCategory = category => {
+		this.setState({ activeCategory: category });
 	};
 	setProducts = products => {
 		this.setState({ products });
@@ -52,7 +56,8 @@ export class ProductContextProvider extends Component {
 	};
 	render() {
 		const {
-			category,
+			categories,
+			activeCategory,
 			products,
 			currency,
 			cart,
@@ -61,7 +66,7 @@ export class ProductContextProvider extends Component {
 			cartTotal,
 		} = this.state;
 		const {
-			setCategory,
+			setCategories,
 			setProducts,
 			setCurrency,
 			setCartItem,
@@ -69,16 +74,18 @@ export class ProductContextProvider extends Component {
 			setCartSubTotal,
 			setCartTax,
 			setCartTotal,
+			setActiveCategory,
 		} = this;
 		const value = {
-			category,
+			categories,
+			activeCategory,
 			products,
 			currency,
 			cart,
 			cartSubTotal,
 			cartTax,
 			cartTotal,
-			setCategory,
+			setCategories,
 			setProducts,
 			setCurrency,
 			setCartItem,
@@ -86,6 +93,7 @@ export class ProductContextProvider extends Component {
 			setCartSubTotal,
 			setCartTax,
 			setCartTotal,
+			setActiveCategory,
 		};
 		return (
 			<ProductContext.Provider value={value}>

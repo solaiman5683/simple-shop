@@ -31,9 +31,28 @@
 	font-weight: 600;
 	padding: 10px 12px;
 	cursor: pointer;
+	text-transform: uppercase;
 }
 
 .navigation__links .link.active {
 	color: #53d87b;
 	border-bottom: 2px solid #53d87b;
+}
+
+.cart {
+	position: relative;
+}
+.cart .badge {
+	position: absolute;
+	top: 0px;
+	right: -10px;
+	background: #53d87b;
+	color: #fff;
+	padding: 5px;
+	width: 15px;
+	height: 15px;
+	border-radius: 50%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
