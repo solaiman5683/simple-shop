@@ -10,8 +10,6 @@ export class ProductContextProvider extends Component {
 		currencies: [],
 		activeCurrency: 'USD',
 		cart: [],
-		cartSubTotal: 0,
-		cartTax: 0,
 		cartTotal: 0,
 	};
 	setCategories = categories => {
@@ -32,36 +30,20 @@ export class ProductContextProvider extends Component {
 	setCartItem = item => {
 		let tempCart = [...this.state.cart];
 		tempCart.push(item);
-		this.setState({ cart: tempCart });
+		let total = 0;
+		tempCart.map(item => (total += item.price));
 
-		this.setCartSubTotal();
-		this.setCartTax();
-		this.setCartTotal();
+		this.setState({ cart: tempCart, cartTotal: total });
 	};
 	removeCartItem = cartItem => {
 		let tempCart = [...this.state.cart];
 		tempCart = tempCart.filter(item => item.id !== cartItem.id);
-		this.setState({ cart: tempCart });
+		let total = 0;
+		tempCart.map(item => (total += item.price));
+
+		this.setState({ cart: tempCart, cartTotal: total });
 	};
-	setCartSubTotal = () => {
-		let subTotal = 0;
-		this.state.cart.map(item => {
-			subTotal += item.price;
-			return subTotal;
-		});
-		this.setState({ cartSubTotal: subTotal });
-	};
-	setCartTax = () => {
-		let tax = 0;
-		if (this.state.cartSubTotal > 0) {
-			tax = this.state.cartSubTotal * 0.2;
-		}
-		this.setState({ cartTax: tax });
-	};
-	setCartTotal = () => {
-		let total = this.state.cartSubTotal + this.state.cartTax;
-		this.setState({ cartTotal: total });
-	};
+
 	render() {
 		const {
 			categories,
@@ -70,8 +52,6 @@ export class ProductContextProvider extends Component {
 			currencies,
 			activeCurrency,
 			cart,
-			cartSubTotal,
-			cartTax,
 			cartTotal,
 		} = this.state;
 		const {
@@ -81,9 +61,6 @@ export class ProductContextProvider extends Component {
 			setActiveCurrencies,
 			setCartItem,
 			removeCartItem,
-			setCartSubTotal,
-			setCartTax,
-			setCartTotal,
 			setActiveCategory,
 		} = this;
 		const value = {
@@ -93,8 +70,6 @@ export class ProductContextProvider extends Component {
 			currencies,
 			activeCurrency,
 			cart,
-			cartSubTotal,
-			cartTax,
 			cartTotal,
 			setCategories,
 			setProducts,
@@ -102,9 +77,6 @@ export class ProductContextProvider extends Component {
 			setActiveCurrencies,
 			setCartItem,
 			removeCartItem,
-			setCartSubTotal,
-			setCartTax,
-			setCartTotal,
 			setActiveCategory,
 		};
 		return (
