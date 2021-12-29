@@ -36,18 +36,23 @@ export default class Navigation extends React.Component {
 	// render the navigation
 	render() {
 		const { logo } = this.props;
-		const { activeCategory, setActiveCategory, cart, currencies } =
-			this.context;
-		console.log(this.context);
+		const {
+			categories,
+			activeCategory,
+			setActiveCategory,
+			cart,
+			currencies,
+			setActiveCurrencies,
+		} = this.context;
 		const handleCurrencyChange = event => {
-			this.context.setActiveCurrencies(event.target.value);
+			setActiveCurrencies(event.target.value);
 		};
 		// return the navigation
 		return (
 			<div className={styles.navigation}>
 				<div className={styles.navigation__links}>
 					<ul>
-						{this.context.categories.map((category, i) => (
+						{categories.map((category, i) => (
 							<li
 								key={i}
 								className={`${styles.link} ${
@@ -68,7 +73,17 @@ export default class Navigation extends React.Component {
 							<select name='currency' onChange={handleCurrencyChange}>
 								{currencies.map((currency, i) => (
 									<option key={i} value={currency}>
-										¥ {currency}
+										{currency === 'USD'
+											? '$ USD'
+											: currency === 'GBP'
+											? '£ GBP'
+											: currency === 'AUD'
+											? '$ AUD'
+											: currency === 'JPY'
+											? '¥ JPY'
+											: currency === 'RUB'
+											? '₽ RUB'
+											: ''}
 									</option>
 								))}
 							</select>

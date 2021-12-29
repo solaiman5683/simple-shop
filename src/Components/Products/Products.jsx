@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import ProductContext from '../../Contexts/ProductContext';
+import Product from './Product';
+import styles from './Product.module.css';
 
 class Products extends Component {
 	static contextType = ProductContext;
@@ -15,12 +17,14 @@ class Products extends Component {
                         categories{
                           name
                           products{
+							id
                             name
                             category
                             prices{
                               amount
                               currency
                             }
+							gallery
                           }
                         }
                     }
@@ -37,19 +41,17 @@ class Products extends Component {
 		const activeProducts = products?.find(
 			product => product.name === this.context.activeCategory
 		)?.products;
-		console.log(activeProducts);
 		return (
 			<div>
-				{activeProducts?.map((product, i) => (
-					<>
-						<h1 key={i}>{product.name}</h1>
-						<h2>
-							{product.prices?.map(
-								(price, i) => price.currency === activeCurrency && price.amount
-							)}
-						</h2>
-					</>
-				))}
+				<div className={styles.products__grid}>
+					{activeProducts?.map(product => (
+						<Product
+							key={product.id}
+							product={product}
+							activeCurrency={activeCurrency}
+						/>
+					))}
+				</div>
 			</div>
 		);
 	}

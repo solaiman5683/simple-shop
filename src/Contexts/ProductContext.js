@@ -33,6 +33,10 @@ export class ProductContextProvider extends Component {
 		let tempCart = [...this.state.cart];
 		tempCart.push(item);
 		this.setState({ cart: tempCart });
+
+		this.setCartSubTotal();
+		this.setCartTax();
+		this.setCartTotal();
 	};
 	removeCartItem = cartItem => {
 		let tempCart = [...this.state.cart];
