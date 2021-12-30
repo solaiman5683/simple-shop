@@ -28,13 +28,50 @@ export class ProductContextProvider extends Component {
 		this.setState({ activeCurrency: currency });
 	};
 	setCartItem = item => {
-		let tempCart = [...this.state.cart];
-		tempCart.push(item);
-		let total = 0;
-		tempCart.map(item => (total += item.price));
-
-		this.setState({ cart: tempCart, cartTotal: total });
+		const exists = this.state.cart.find(cartItem => cartItem.id === item.id);
+		if (exists) {
+			this.setState({
+				cart: this.state.cart.map(cartItem => {
+					if (cartItem.id === item.id) {
+						cartItem.count += 1;
+						cartItem.total = cartItem.count * cartItem.price;
+					}
+					return cartItem;
+				}),
+			});
+		} else {
+			item.count = 1;
+			item.total = item.price;
+			this.setState({
+				cart: [...this.state.cart, item],
+			});
+		}
 	};
+
+	increaseCount = id => {
+		this.setState({
+			cart: this.state.cart.map(cartItem => {
+				if (cartItem.id === id) {
+					cartItem.count += 1;
+					cartItem.total = cartItem.count * cartItem.price;
+				}
+				return cartItem;
+			}),
+		});
+	};
+
+	decreaseCount = id => {
+		this.setState({
+			cart: this.state.cart.map(cartItem => {
+				if (cartItem.id === id) {
+					cartItem.count -= 1;
+					cartItem.total = cartItem.count * cartItem.price;
+				}
+				return cartItem;
+			}),
+		});
+	};
+
 	removeCartItem = cartItem => {
 		let tempCart = [...this.state.cart];
 		tempCart = tempCart.filter(item => item.id !== cartItem.id);

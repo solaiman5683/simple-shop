@@ -12,7 +12,7 @@ class Product extends Component {
 			price: product.prices.find(price => price.currency === activeCurrency)
 				.amount,
 		};
-		console.log(this.context);
+		console.log(this.context.cart);
 		return (
 			<div className={styles.products__item}>
 				<div
