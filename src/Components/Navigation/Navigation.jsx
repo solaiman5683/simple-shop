@@ -1,6 +1,7 @@
 import React from 'react';
 import styles from './Navigation.module.css';
 import ProductContext from '../../Contexts/ProductContext';
+import Cart from '../Cart/Cart';
 
 export default class Navigation extends React.Component {
 	// use context data
@@ -43,58 +44,70 @@ export default class Navigation extends React.Component {
 			cart,
 			currencies,
 			setActiveCurrencies,
+			showCart,
+			setShowCart,
+			cartCount,
 		} = this.context;
 		const handleCurrencyChange = event => {
 			setActiveCurrencies(event.target.value);
 		};
 		// return the navigation
 		return (
-			<div className={styles.navigation}>
-				<div className={styles.navigation__links}>
-					<ul>
-						{categories.map((category, i) => (
-							<li
-								key={i}
-								className={`${styles.link} ${
-									category.name === activeCategory && styles.active
-								}`}
-								onClick={() => setActiveCategory(category.name)}>
-								{category.name}
+			<div className={styles.container}>
+				<div className={styles.navigation}>
+					<div className={styles.navigation__links}>
+						<ul>
+							{categories.map((category, i) => (
+								<li
+									key={i}
+									className={`${styles.link} ${
+										category.name === activeCategory && styles.active
+									}`}
+									onClick={() => setActiveCategory(category.name)}>
+									{category.name}
+								</li>
+							))}
+						</ul>
+					</div>
+					<div className={styles.navigation__logo}>
+						<img src={logo} alt='logo' />
+					</div>
+					<div className={styles.navigation__links}>
+						<ul>
+							<li>
+								<select name='currency' onChange={handleCurrencyChange}>
+									{currencies.map((currency, i) => (
+										<option key={i} value={currency}>
+											{currency === 'USD'
+												? '$ USD'
+												: currency === 'GBP'
+												? '£ GBP'
+												: currency === 'AUD'
+												? '$ AUD'
+												: currency === 'JPY'
+												? '¥ JPY'
+												: currency === 'RUB'
+												? '₽ RUB'
+												: ''}
+										</option>
+									))}
+								</select>
 							</li>
-						))}
-					</ul>
-				</div>
-				<div className={styles.navigation__logo}>
-					<img src={logo} alt='logo' />
-				</div>
-				<div className={styles.navigation__links}>
-					<ul>
-						<li>
-							<select name='currency' onChange={handleCurrencyChange}>
-								{currencies.map((currency, i) => (
-									<option key={i} value={currency}>
-										{currency === 'USD'
-											? '$ USD'
-											: currency === 'GBP'
-											? '£ GBP'
-											: currency === 'AUD'
-											? '$ AUD'
-											: currency === 'JPY'
-											? '¥ JPY'
-											: currency === 'RUB'
-											? '₽ RUB'
-											: ''}
-									</option>
-								))}
-							</select>
-						</li>
-						<li className={styles.cart}>
-							<img src='/assets/images/icons/cart.svg' alt='' />
-							{cart.length > 0 && (
-								<span className={styles.badge}>{cart.length}</span>
-							)}
-						</li>
-					</ul>
+							<li className={styles.cart}>
+								<span onClick={setShowCart}>
+									<img src='/assets/images/icons/cart.svg' alt='' />
+									{cart.length > 0 && (
+										<span className={styles.badge}>{cartCount}</span>
+									)}
+								</span>
+								{showCart && (
+									<div className={styles.cart__items}>
+										<Cart />
+									</div>
+								)}
+							</li>
+						</ul>
+					</div>
 				</div>
 			</div>
 		);

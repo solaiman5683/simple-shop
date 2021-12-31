@@ -10,6 +10,8 @@ export class ProductContextProvider extends Component {
 		currencies: [],
 		activeCurrency: 'USD',
 		cart: [],
+		cartCount: 0,
+		showCart: false,
 		cartTotal: 0,
 	};
 	setCategories = categories => {
@@ -28,57 +30,80 @@ export class ProductContextProvider extends Component {
 		this.setState({ activeCurrency: currency });
 	};
 	setCartItem = item => {
+		let total = this.state.cartTotal;
 		const exists = this.state.cart.find(cartItem => cartItem.id === item.id);
 		if (exists) {
 			this.setState({
 				cart: this.state.cart.map(cartItem => {
 					if (cartItem.id === item.id) {
 						cartItem.count += 1;
-						cartItem.total = cartItem.count * cartItem.price;
+						total += cartItem.count * cartItem.price;
 					}
 					return cartItem;
 				}),
+				cartCount: this.state.cartCount + 1,
+				cartTotal: total,
 			});
 		} else {
 			item.count = 1;
-			item.total = item.price;
+			total += item.price;
 			this.setState({
 				cart: [...this.state.cart, item],
+				cartCount: this.state.cartCount + 1,
+				cartTotal: total,
 			});
 		}
 	};
 
 	increaseCount = id => {
+		let total = this.state.cartTotal;
 		this.setState({
 			cart: this.state.cart.map(cartItem => {
 				if (cartItem.id === id) {
 					cartItem.count += 1;
-					cartItem.total = cartItem.count * cartItem.price;
+					total += cartItem.count * cartItem.price;
 				}
 				return cartItem;
 			}),
+			cartCount: this.state.cartCount + 1,
+			cartTotal: total,
 		});
 	};
 
 	decreaseCount = id => {
-		this.setState({
-			cart: this.state.cart.map(cartItem => {
-				if (cartItem.id === id) {
-					cartItem.count -= 1;
-					cartItem.total = cartItem.count * cartItem.price;
-				}
-				return cartItem;
-			}),
-		});
+		let total = this.state.cartTotal;
+		const cartItem = this.state.cart.find(cartItem => cartItem.id === id);
+		if (cartItem.count <= 1) {
+			this.removeCartItem(cartItem);
+		} else {
+			this.setState({
+				cart: this.state.cart.map(cartItem => {
+					if (cartItem.id === id) {
+						cartItem.count -= 1;
+						total += cartItem.count * cartItem.price;
+					}
+					return cartItem;
+				}),
+				cartCount: this.state.cartCount - 1,
+				cartTotal: total,
+			});
+		}
 	};
 
 	removeCartItem = cartItem => {
 		let tempCart = [...this.state.cart];
 		tempCart = tempCart.filter(item => item.id !== cartItem.id);
 		let total = 0;
-		tempCart.map(item => (total += item.price));
+		tempCart.map(item => {
+			total += item.count * item.price;
+			return item;
+		});
 
 		this.setState({ cart: tempCart, cartTotal: total });
+	};
+
+	setShowCart = () => {
+		this.setState({ showCart: !this.state.showCart });
 	};
 
 	render() {
@@ -90,6 +115,8 @@ export class ProductContextProvider extends Component {
 			activeCurrency,
 			cart,
 			cartTotal,
+			showCart,
+			cartCount,
 		} = this.state;
 		const {
 			setCategories,
@@ -99,6 +126,9 @@ export class ProductContextProvider extends Component {
 			setCartItem,
 			removeCartItem,
 			setActiveCategory,
+			increaseCount,
+			decreaseCount,
+			setShowCart,
 		} = this;
 		const value = {
 			categories,
@@ -108,6 +138,8 @@ export class ProductContextProvider extends Component {
 			activeCurrency,
 			cart,
 			cartTotal,
+			showCart,
+			cartCount,
 			setCategories,
 			setProducts,
 			setCurrencies,
@@ -115,6 +147,9 @@ export class ProductContextProvider extends Component {
 			setCartItem,
 			removeCartItem,
 			setActiveCategory,
+			increaseCount,
+			decreaseCount,
+			setShowCart,
 		};
 		return (
 			<ProductContext.Provider value={value}>

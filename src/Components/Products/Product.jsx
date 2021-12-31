@@ -9,10 +9,10 @@ class Product extends Component {
 		const { product, activeCurrency } = this.props;
 		const cartItem = {
 			id: product.id,
+			category: product.category,
 			price: product.prices.find(price => price.currency === activeCurrency)
 				.amount,
 		};
-		console.log(this.context.cart);
 		return (
 			<div className={styles.products__item}>
 				<div

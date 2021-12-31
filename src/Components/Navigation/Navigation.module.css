@@ -1,3 +1,8 @@
+.container {
+	background: rgb(255, 255, 255);
+	z-index: 9999;
+}
+
 .navigation {
 	display: flex;
 	align-items: center;
@@ -61,4 +66,18 @@
 	display: flex;
 	justify-content: center;
 	align-items: center;
+}
+
+.cart .cart__items {
+	position: absolute;
+	width: 300px;
+	right: 0;
+	top: 100%;
+	padding: 10px 25px;
+	background: rgb(255, 255, 255);
+	color: #242424;
+	border-radius: 5px;
+	box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.226);
+	z-index: 999;
+	transition: all 0.3s ease-in-out;
 }
