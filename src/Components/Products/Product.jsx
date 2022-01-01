@@ -13,8 +13,12 @@ class Product extends Component {
 			price: product.prices.find(price => price.currency === activeCurrency)
 				.amount,
 		};
+		console.log(product);
 		return (
-			<div className={styles.products__item}>
+			<div
+				className={`${styles.products__item} ${
+					product.inStock && styles.stockOut
+				}`}>
 				<div
 					className={styles.products__item__image}
 					style={{

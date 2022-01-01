@@ -25,6 +25,14 @@ class Products extends Component {
                               currency
                             }
 							gallery
+							inStock
+							attributes{
+								name
+								items{
+								  displayValue
+								  value
+								}
+							  }
                           }
                         }
                     }

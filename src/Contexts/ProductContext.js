@@ -9,6 +9,7 @@ export class ProductContextProvider extends Component {
 		products: [],
 		currencies: [],
 		activeCurrency: 'USD',
+		activeSymbol: '$',
 		cart: [],
 		cartCount: 0,
 		showCart: false,
@@ -27,7 +28,21 @@ export class ProductContextProvider extends Component {
 		this.setState({ currencies });
 	};
 	setActiveCurrencies = currency => {
-		this.setState({ activeCurrency: currency });
+		this.setState({
+			activeCurrency: currency,
+			activeSymbol:
+				currency === 'USD'
+					? `$`
+					: currency === 'GBP'
+					? `£`
+					: currency === 'AUD'
+					? `$`
+					: currency === 'JPY'
+					? `¥`
+					: currency === 'RUB'
+					? `₽`
+					: '',
+		});
 	};
 	setCartItem = item => {
 		let total = this.state.cartTotal;
@@ -53,6 +68,17 @@ export class ProductContextProvider extends Component {
 				cartTotal: total,
 			});
 		}
+	};
+
+	setCartItemAttribute = (item, attribute, value) => {
+		this.setState({
+			cart: this.state.cart.map(cartItem => {
+				if (cartItem.id === item.id) {
+					cartItem[attribute.toLowerCase()] = value;
+				}
+				return cartItem;
+			}),
+		});
 	};
 
 	increaseCount = id => {
@@ -99,7 +125,11 @@ export class ProductContextProvider extends Component {
 			return item;
 		});
 
-		this.setState({ cart: tempCart, cartTotal: total });
+		this.setState({
+			cart: tempCart,
+			cartTotal: total,
+			cartCount: this.state.cartCount - 1,
+		});
 	};
 
 	setShowCart = () => {
@@ -117,6 +147,7 @@ export class ProductContextProvider extends Component {
 			cartTotal,
 			showCart,
 			cartCount,
+			activeSymbol,
 		} = this.state;
 		const {
 			setCategories,
@@ -129,6 +160,7 @@ export class ProductContextProvider extends Component {
 			increaseCount,
 			decreaseCount,
 			setShowCart,
+			setCartItemAttribute,
 		} = this;
 		const value = {
 			categories,
@@ -140,6 +172,7 @@ export class ProductContextProvider extends Component {
 			cartTotal,
 			showCart,
 			cartCount,
+			activeSymbol,
 			setCategories,
 			setProducts,
 			setCurrencies,
@@ -150,6 +183,7 @@ export class ProductContextProvider extends Component {
 			increaseCount,
 			decreaseCount,
 			setShowCart,
+			setCartItemAttribute,
 		};
 		return (
 			<ProductContext.Provider value={value}>
