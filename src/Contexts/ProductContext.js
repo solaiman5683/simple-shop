@@ -15,15 +15,57 @@ export class ProductContextProvider extends Component {
 		showCart: false,
 		cartTotal: 0,
 	};
+	componentDidMount() {
+		fetch('http://localhost:4000/', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify({
+				query: `
+                    query {
+                        categories{
+                          name
+                          products{
+							id
+                            name
+                            category
+                            prices{
+                              amount
+                              currency
+                            }
+							gallery
+							inStock
+							attributes{
+								name
+								items{
+								  displayValue
+								  value
+								}
+							  }
+                          }
+                        }
+                    }
+                `,
+			}),
+		})
+			.then(res => res.json())
+			.then(res => {
+				let tempProducts = [];
+				res.data.categories.forEach(category => {
+					tempProducts = [...tempProducts, ...category.products];
+				});
+				this.setState({ products: tempProducts });
+			});
+	}
+
 	setCategories = categories => {
 		this.setState({ categories });
 	};
 	setActiveCategory = category => {
 		this.setState({ activeCategory: category });
 	};
-	setProducts = products => {
-		this.setState({ products });
-	};
+
 	setCurrencies = currencies => {
 		this.setState({ currencies });
 	};
@@ -71,6 +113,7 @@ export class ProductContextProvider extends Component {
 	};
 
 	setCartItemAttribute = (item, attribute, value) => {
+		console.log(item, attribute, value);
 		this.setState({
 			cart: this.state.cart.map(cartItem => {
 				if (cartItem.id === item.id) {
@@ -151,7 +194,6 @@ export class ProductContextProvider extends Component {
 		} = this.state;
 		const {
 			setCategories,
-			setProducts,
 			setCurrencies,
 			setActiveCurrencies,
 			setCartItem,
@@ -174,7 +216,6 @@ export class ProductContextProvider extends Component {
 			cartCount,
 			activeSymbol,
 			setCategories,
-			setProducts,
 			setCurrencies,
 			setActiveCurrencies,
 			setCartItem,

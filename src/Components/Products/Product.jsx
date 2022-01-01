@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import ProductContext from '../../Contexts/ProductContext';
 import styles from './Product.module.css';
 
@@ -13,17 +14,18 @@ class Product extends Component {
 			price: product.prices.find(price => price.currency === activeCurrency)
 				.amount,
 		};
-		console.log(product);
 		return (
 			<div
 				className={`${styles.products__item} ${
-					product.inStock && styles.stockOut
+					!product.inStock && styles.stockOut
 				}`}>
-				<div
-					className={styles.products__item__image}
-					style={{
-						backgroundImage: `url("${product.gallery[0]}")`,
-					}}></div>
+				<Link to={`product/${product.id}`}>
+					<div
+						className={styles.products__item__image}
+						style={{
+							backgroundImage: `url("${product.gallery[0]}")`,
+						}}></div>
+				</Link>
 				<div className={styles.products__item__information}>
 					<h3>{product?.name}</h3>
 					<p>

@@ -24,10 +24,10 @@ class Cart extends Component {
 				<div>
 					{cart.length > 0 &&
 						cart.map(item => {
-							const product = products.find(
-								product => product.name === item.category
+							const product = products.filter(
+								product => product.category === item.category
 							);
-							const productItem = product.products.find(
+							const productItem = product.find(
 								product => product.id === item.id
 							);
 							const productAttribute = productItem.attributes[0];
@@ -44,7 +44,7 @@ class Cart extends Component {
 													price.currency === activeCurrency && price.amount
 											)}
 										</p>
-										<p>
+										<div>
 											{productAttribute?.name}
 											<p>
 												{productAttribute?.items.map((at, i) =>
@@ -88,7 +88,7 @@ class Cart extends Component {
 													)
 												)}
 											</p>
-										</p>
+										</div>
 									</div>
 									<div className={styles.count}>
 										<button onClick={() => increaseCount(item.id)}>+</button>

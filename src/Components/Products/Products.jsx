@@ -5,50 +5,12 @@ import styles from './Product.module.css';
 
 class Products extends Component {
 	static contextType = ProductContext;
-	componentDidMount = () => {
-		fetch('http://localhost:4000/', {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json',
-			},
-			body: JSON.stringify({
-				query: `
-                    query {
-                        categories{
-                          name
-                          products{
-							id
-                            name
-                            category
-                            prices{
-                              amount
-                              currency
-                            }
-							gallery
-							inStock
-							attributes{
-								name
-								items{
-								  displayValue
-								  value
-								}
-							  }
-                          }
-                        }
-                    }
-                `,
-			}),
-		})
-			.then(res => res.json())
-			.then(res => {
-				this.context.setProducts(res.data.categories);
-			});
-	};
+
 	render() {
 		const { products, activeCurrency } = this.context;
-		const activeProducts = products?.find(
-			product => product.name === this.context.activeCategory
-		)?.products;
+		const activeProducts = products?.filter(
+			product => product.category === this.context.activeCategory
+		);
 		return (
 			<div>
 				<div className={styles.products__grid}>

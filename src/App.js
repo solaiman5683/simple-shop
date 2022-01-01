@@ -4,13 +4,20 @@ import './App.css';
 import Navigation from './Components/Navigation/Navigation';
 import { ProductContextProvider } from './Contexts/ProductContext';
 import Home from './Components/Home/Home';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import ProductDetails from './Components/Products/ProductDetails';
 
 class App extends Component {
 	render() {
 		return (
 			<ProductContextProvider>
-				<Navigation logo={logo} />
-				<Home />
+				<BrowserRouter>
+					<Navigation logo={logo} />
+					<Routes>
+						<Route path='/' element={<Home />} />
+						<Route path='/product/:id' element={<ProductDetails />} />
+					</Routes>
+				</BrowserRouter>
 			</ProductContextProvider>
 		);
 	}

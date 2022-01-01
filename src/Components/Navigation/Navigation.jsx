@@ -2,6 +2,7 @@ import React from 'react';
 import styles from './Navigation.module.css';
 import ProductContext from '../../Contexts/ProductContext';
 import Cart from '../Cart/Cart';
+import { Link } from 'react-router-dom';
 
 export default class Navigation extends React.Component {
 	// use context data
@@ -58,14 +59,15 @@ export default class Navigation extends React.Component {
 					<div className={styles.navigation__links}>
 						<ul>
 							{categories.map((category, i) => (
-								<li
-									key={i}
-									className={`${styles.link} ${
-										category.name === activeCategory && styles.active
-									}`}
-									onClick={() => setActiveCategory(category.name)}>
-									{category.name}
-								</li>
+								<Link to='/' key={i}>
+									<li
+										className={`${styles.link} ${
+											category.name === activeCategory && styles.active
+										}`}
+										onClick={() => setActiveCategory(category.name)}>
+										{category.name}
+									</li>
+								</Link>
 							))}
 						</ul>
 					</div>
