@@ -110,7 +110,16 @@ class ProductDetails extends Component {
 						/>
 					</div>
 				</div>
-				{showCart && <div className='wrapper' onClick={setShowCart}></div>}
+				{showCart && (
+					<div
+						className='wrapper'
+						style={{
+							height: `${
+								document.getElementsByTagName('body')[0].scrollHeight
+							}px`,
+						}}
+						onClick={setShowCart}></div>
+				)}
 			</div>
 		);
 	}

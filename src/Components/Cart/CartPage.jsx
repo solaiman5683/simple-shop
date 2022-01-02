@@ -34,7 +34,6 @@ class CartPage extends Component {
 							);
 							const productAttribute = productItem.attributes[0];
 							const attributeName = productAttribute?.name.toLowerCase();
-							console.log(attributeName);
 							return (
 								<div key={item.id} className={styles.cart__page__container}>
 									<div className={styles.cart__details}>
@@ -133,7 +132,11 @@ class CartPage extends Component {
 				{showCart && (
 					<div
 						className='wrapper'
-						// style={{ height: `${window.innerHeight}px` }}
+						style={{
+							height: `${
+								document.getElementsByTagName('body')[0].scrollHeight
+							}px`,
+						}}
 						onClick={setShowCart}></div>
 				)}
 			</div>

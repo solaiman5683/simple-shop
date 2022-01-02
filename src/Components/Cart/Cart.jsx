@@ -17,10 +17,9 @@ class Cart extends Component {
 			setCartItemAttribute,
 		} = this.context;
 
-		// console.log(cart);
 		return (
 			<div>
-				<p>My Bag, {cart.length} items</p>
+				<p style={{ paddingBottom: '20px' }}>My Bag, {cart.length} items</p>
 
 				<div>
 					{cart.length > 0 &&
@@ -31,9 +30,8 @@ class Cart extends Component {
 							const productItem = product.find(
 								product => product.id === item.id
 							);
-							const productAttribute = productItem.attributes[0];
+							const productAttribute = productItem?.attributes[0];
 							const attributeName = productAttribute?.name.toLowerCase();
-							console.log(attributeName);
 							return (
 								<div key={item.id} className={styles.cartContainer}>
 									<div className={styles.details}>
