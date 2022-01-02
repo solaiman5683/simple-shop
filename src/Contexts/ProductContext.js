@@ -42,7 +42,9 @@ export class ProductContextProvider extends Component {
 								  displayValue
 								  value
 								}
-							  }
+							}
+							brand
+							description
                           }
                         }
                     }
@@ -94,7 +96,7 @@ export class ProductContextProvider extends Component {
 				cart: this.state.cart.map(cartItem => {
 					if (cartItem.id === item.id) {
 						cartItem.count += 1;
-						total += cartItem.count * cartItem.price;
+						total += cartItem.price;
 					}
 					return cartItem;
 				}),
@@ -130,7 +132,7 @@ export class ProductContextProvider extends Component {
 			cart: this.state.cart.map(cartItem => {
 				if (cartItem.id === id) {
 					cartItem.count += 1;
-					total += cartItem.count * cartItem.price;
+					total += cartItem.price;
 				}
 				return cartItem;
 			}),
@@ -149,7 +151,7 @@ export class ProductContextProvider extends Component {
 				cart: this.state.cart.map(cartItem => {
 					if (cartItem.id === id) {
 						cartItem.count -= 1;
-						total += cartItem.count * cartItem.price;
+						total -= cartItem.price;
 					}
 					return cartItem;
 				}),
@@ -164,7 +166,7 @@ export class ProductContextProvider extends Component {
 		tempCart = tempCart.filter(item => item.id !== cartItem.id);
 		let total = 0;
 		tempCart.map(item => {
-			total += item.count * item.price;
+			total -= item.price;
 			return item;
 		});
 

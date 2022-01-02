@@ -21,7 +21,7 @@ class ProductDetails extends Component {
 		} = this.context;
 		const { id } = this.props.params;
 		const product = products?.find(product => product.id === id);
-		const productAttribute = product?.attributes[0].name;
+		const productAttribute = product?.attributes[0]?.name;
 		const cartItem = {
 			id: product?.id,
 			category: product?.category,
@@ -29,7 +29,7 @@ class ProductDetails extends Component {
 				.amount,
 		};
 		cartItem[productAttribute?.toLowerCase()] = this.state.activeAttribute;
-		console.log(cartItem);
+		console.log(product);
 		return (
 			<div className='container'>
 				<div className={styles.product__details}>
@@ -50,12 +50,12 @@ class ProductDetails extends Component {
 					</div>
 					<div className={styles.product__info}>
 						<h1 className={styles.name}>{product?.name}</h1>
-						<p className={styles.product__category}>{product?.category}</p>
+						<p className={styles.product__brand}>Brand: {product?.brand}</p>
 						<div className={styles.product__attributes}>
-							{product?.attributes[0].name}
+							{product?.attributes[0]?.name}
 							<p>
 								{product?.attributes[0]?.items.map((at, i) =>
-									product?.attributes[0].name === 'Color' ? (
+									product?.attributes[0]?.name === 'Color' ? (
 										<span>
 											<button
 												style={{
@@ -104,6 +104,10 @@ class ProductDetails extends Component {
 							}}>
 							Add to Cart
 						</button>
+						<div
+							className={styles.product__description}
+							dangerouslySetInnerHTML={{ __html: product?.description }}
+						/>
 					</div>
 				</div>
 				{showCart && <div className='wrapper' onClick={setShowCart}></div>}

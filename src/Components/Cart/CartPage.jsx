@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import ProductContext from '../../Contexts/ProductContext';
 import styles from './Cart.module.css';
 
-class Cart extends Component {
+class CartPage extends Component {
 	static contextType = ProductContext;
 	render() {
 		const {
@@ -15,11 +15,12 @@ class Cart extends Component {
 			cartTotal,
 			activeSymbol,
 			setCartItemAttribute,
+			showCart,
+			setShowCart,
 		} = this.context;
-
-		// console.log(cart);
 		return (
-			<div>
+			<div className={styles.cart__container}>
+				<h1 style={{ margin: '2em 0' }}>Cart</h1>
 				<p>My Bag, {cart.length} items</p>
 
 				<div>
@@ -35,24 +36,25 @@ class Cart extends Component {
 							const attributeName = productAttribute?.name.toLowerCase();
 							console.log(attributeName);
 							return (
-								<div key={item.id} className={styles.cartContainer}>
-									<div className={styles.details}>
-										<p>{productItem?.name}</p>
-										<p>
+								<div key={item.id} className={styles.cart__page__container}>
+									<div className={styles.cart__details}>
+										<h2>{productItem?.name}</h2>
+										<p style={{ fontSize: '1.2rem' }}>{productItem?.brand}</p>
+										<h3>
 											{activeSymbol}
 											{productItem?.prices?.map(
 												(price, i) =>
 													price.currency === activeCurrency && price.amount
 											)}
-										</p>
+										</h3>
 										<div>
-											{productAttribute?.name}
+											<h4>{productAttribute?.name}</h4>
 											<p>
 												{productAttribute?.items.map((at, i) =>
 													attributeName === 'color' ? (
 														<span>
 															<button
-																className={`${styles.attributesColor} ${
+																className={`${styles.item__attributes__color} ${
 																	at.value === item[attributeName]
 																		? styles.active
 																		: ''
@@ -71,7 +73,7 @@ class Cart extends Component {
 														</span>
 													) : (
 														<button
-															className={`${styles.attributes} ${
+															className={`${styles.item__attributes} ${
 																at.value === item[attributeName]
 																	? styles.active
 																	: ''
@@ -91,12 +93,12 @@ class Cart extends Component {
 											</p>
 										</div>
 									</div>
-									<div className={styles.count}>
+									<div className={styles.item__count}>
 										<button onClick={() => increaseCount(item.id)}>+</button>
 										<span>{item.count}</span>
 										<button onClick={() => decreaseCount(item.id)}>-</button>
 									</div>
-									<div className={styles.image}>
+									<div className={styles.item__image}>
 										<img src={productItem.gallery[0]} alt={productItem.name} />
 									</div>
 								</div>
@@ -104,7 +106,12 @@ class Cart extends Component {
 						})}
 				</div>
 
-				<div style={{ display: 'flex', justifyContent: 'space-between' }}>
+				<div
+					style={{
+						display: 'flex',
+						justifyContent: 'space-between',
+						fontSize: '1.3rem',
+					}}>
 					<h4>Total: </h4>
 					<h4 style={{ textAlign: 'right' }}>
 						{activeSymbol}
@@ -117,14 +124,21 @@ class Cart extends Component {
 						justifyContent: 'space-between',
 						marginTop: '20px',
 					}}>
-					<Link to='/cart'>
-						<button className={styles.button_bag}>VIEW BAG</button>
+					<span></span>
+					<Link to='/checkout'>
+						<button className={styles.checkout}>CHECK OUT</button>
 					</Link>
-					<button className={styles.checkout}>CHECK OUT</button>
 				</div>
+
+				{showCart && (
+					<div
+						className='wrapper'
+						// style={{ height: `${window.innerHeight}px` }}
+						onClick={setShowCart}></div>
+				)}
 			</div>
 		);
 	}
 }
 
-export default Cart;
+export default CartPage;

@@ -6,6 +6,7 @@ import { ProductContextProvider } from './Contexts/ProductContext';
 import Home from './Components/Home/Home';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import ProductDetails from './Components/Products/ProductDetails';
+import CartPage from './Components/Cart/CartPage';
 
 class App extends Component {
 	render() {
@@ -16,6 +17,7 @@ class App extends Component {
 					<Routes>
 						<Route path='/' element={<Home />} />
 						<Route path='/product/:id' element={<ProductDetails />} />
+						<Route path='/cart' element={<CartPage />} />
 					</Routes>
 				</BrowserRouter>
 			</ProductContextProvider>

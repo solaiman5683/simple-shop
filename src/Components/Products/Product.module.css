@@ -122,11 +122,12 @@
 	padding: 40px;
 }
 
-.product__info .product__category {
-	font-size: 1.5rem;
+.product__info .product__brand {
+	font-size: 1rem;
 	font-weight: bold;
 	text-transform: capitalize;
 	color: #1d1f22;
+	margin-bottom: 2em;
 }
 
 .product__attributes {
@@ -164,4 +165,10 @@
 	border-radius: 4px;
 	font-size: 1.2rem;
 	cursor: pointer;
+}
+
+.product__description {
+	margin-top: 2em;
+	font-size: 1.2rem;
+	color: #1d1f22;
 }
